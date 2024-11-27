@@ -24,6 +24,16 @@ public:
     }
 };
 
+class Mosquito { // Move Mosquito definition here
+private:
+    string species;
+
+public:
+    Mosquito(string species) : species(species) {}
+
+    string getSpecies() const { return species; }
+};
+
 class Person {
 protected:
     string name;
@@ -36,13 +46,11 @@ public:
     Address getAddress() const { return address; }
 };
 
-// Student Class (inherits from Person)
 class Student : public Person {
 public:
     Student(string name, Address address) : Person(name, address) {}
 };
 
-// Commuter Class (inherits from Person)
 class Commuter : public Person {
 public:
     Commuter(string name, Address address) : Person(name, address) {}
@@ -87,7 +95,6 @@ public:
     int getYear() const { return year; }
 };
 
-// Forward declaration of Driver class
 class Driver;
 
 class Bus : public Vehicle {
@@ -95,7 +102,8 @@ private:
     string busNumber;
     Engine engine;
     Driver* driver;
-    vector<Student*> commuters;
+    vector<Person*> commuters;
+    vector<Mosquito*> mosquitoes; 
 
 public:
     Bus(string busNumber, string make, string model, int year)
@@ -105,8 +113,21 @@ public:
         this->driver = driver;
     }
 
-    void addCommuter(Student* commuter) {
+    void addCommuter(Person* commuter) {
         commuters.push_back(commuter);
+    }
+
+    void addMosquito(Mosquito* mosquito) {
+        mosquitoes.push_back(mosquito);
+    }
+
+    bool hasMosquito(const string& species) const {
+        for (const auto& mosquito : mosquitoes) {
+            if (mosquito->getSpecies() == species) {
+                return true;
+            }
+        }
+        return false;
     }
 
     void startEngine() {
@@ -117,17 +138,16 @@ public:
         return commuters.size();
     }
 
-    void displayBuses() const {
+    void displayBusInfo() const {
         cout << "Bus " << busNumber << " has " << commuters.size() << " commuters." << endl;
     }
 
     string getBusNumber() const { return busNumber; }
-    vector<Student*> getCommuters() const { return commuters; }
+    vector<Person*> getCommuters() const { return commuters; }
     Driver* getDriver() const { return driver; }
-    Engine getEngine() const { return engine; }
+    Engine& getEngine() { return engine; }
 };
 
-// Driver Class (inherits from Person)
 class Driver : public Person {
 public:
     Driver(string name, Address address) : Person(name, address) {}
@@ -161,16 +181,6 @@ public:
     string getStationName() const { return stationName; }
 };
 
-class Mosquito {
-private:
-    string species;
-
-public:
-    Mosquito(string species) : species(species) {}
-
-    string getSpecies() const { return species; }
-};
-
 class Apartment {
 private:
     string apartmentNumber;
@@ -196,7 +206,6 @@ public:
     vector<Mosquito*> getMosquitoes() const { return mosquitoes; }
 };
 
-// Car Class (inherits from Vehicle)
 class Car : public Vehicle {
 private:
     bool hasMosquito;

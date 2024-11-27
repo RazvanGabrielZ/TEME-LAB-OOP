@@ -23,8 +23,5 @@
     <ClInclude Include="relations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="store.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
